@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-//import App from './App';
-import Hello from './Hello';
+import App from './App';
+//import Hello from './Hello';
+import Bmi from './Bmi';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Hello name="donald" surname="trump"/>
-    <Hello name="donald"/>
-    <Hello surname="trump"/>
+    <App/>
   </React.StrictMode>
 );
 
