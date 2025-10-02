@@ -1,5 +1,7 @@
 import { useState,useEffect } from "react";
+import { Link } from 'react-router-dom';
 import './list.css';
+
 export default function List() {
     const [value,setValue]=useState("");
     const book = [
@@ -13,16 +15,35 @@ export default function List() {
         { "id": 8, "title": "Strangers in Time: A World War II Novel", "author": "David Baldacci", "image_url": "https://images-na.ssl-images-amazon.com/images/I/816QI0pfuRL._AC_UL254_SR254,254_.jpg", "price": 17.84 }
     ];
     const [books,setBooks]=useState(book);
-    const url="https://potential-cod-q7x96pv77f479x-5001.app.github.dev/books";
+    const url = `${import.meta.env.VITE_API_URL}/api/products`;
     async function fetchData(){
             try{
                 const response = await fetch(url);
                 if(response.ok){
                     const data=await response.json();
-                    setBooks(data.books);
+                    setBooks(data);
                 }else throw Error('Failed to fetch data');
             }catch(error){ console.error('Error:',error);}
         }
+     async function deleteBook(id) {
+         if (window.confirm("Are you sure you want to delete this book?")) {
+            try {
+                const response = await fetch(`${url}/${id}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    alert('Book deleted successfully');
+                    // If the delete was successful, filter out the deleted book from the state
+                    setBooks(books.filter(book => book.id !== id));
+                } else {
+                    throw new Error('Failed to delete book');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+
     useEffect(()=>{
         fetchData();
     },[]);
@@ -32,6 +53,10 @@ export default function List() {
         <div className="bookTitle">{b.title}</div>
         <div className="bookAuthor">{b.author}</div>
         <div className="bookPrice">{b.price}$</div>
+        <div><button onClick={()=>deleteBook(b.id)}>Delete</button></div>
+        <Link to={`/update/${b.id}`}>
+                <button>Update</button>
+        </Link>
     </li>);
     return (<>
     <div className="searchbox">

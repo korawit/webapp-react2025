@@ -6,6 +6,8 @@ import Hello from './Hello';
 import Home from './Home';
 import About from './About';
 import List from './List';
+import CreateBook from './CreateBook';
+import Update from './UpdateBook'; // Import the new component
 function App() {
   return (
     <>
@@ -18,6 +20,7 @@ function App() {
           <li><Link to="/hello">Hello</Link></li>
           <li><Link to="/hello?name=korawit&surname=orkphol">Hello Korawit</Link></li>
           <li><Link to="/about">About</Link></li>
+          <li><Link to="/create">Create</Link></li>
         </ul>
       </div>
       <Routes>
@@ -27,6 +30,8 @@ function App() {
           <Route path="/hello/:n" element={<Hello/>}/>
           <Route path="/hello/:n/:m" element={<Hello/>}/>
           <Route path="/about" element={<About/>}/>
+          <Route path="/create" element={<CreateBook/>}/>
+          <Route path="/update/:id" element={<Update/>}/>
       </Routes>
     </BrowserRouter>
     <h1>Footer</h1>
